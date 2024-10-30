@@ -21,3 +21,19 @@ export function getStringInfo(args:string) :stringInfo{
         extraInfo:{}
     }
 }
+
+
+export function funcUpper(str:string):string{
+    return str.toUpperCase()
+}
+
+// Error
+export class StringUtils{
+    public toUpperCase(args:string){
+        // check the error
+        if(!args){
+            throw new Error("Invalid arguments")
+        }
+        return args.toUpperCase()
+    }
+}

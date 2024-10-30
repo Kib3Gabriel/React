@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node fundamentals/assertions/3.creatingCustomAssertions.ts"
+    "start": "ts-node fundamentals/assertions/2.ts"
   },
   "keywords": [],
   "author": "",

@@ -1,15 +1,15 @@
 import { sub, sum } from "./1";
 
-let result, expected
+let resultSum, expectedSum
 
-result = sum(5,5)
-expected = 10
+resultSum = sum(5,5)
+expectedSum = 10
 
 
 let resultSub = sub(5,2)
-let expectSub = 3
+let expectSub = 2
 
-expect(result).toBe(expected)
+expect(resultSum).toBe(expectedSum)
 expect(resultSub).toBe(expectSub)
 
 //lets do some abstraction 

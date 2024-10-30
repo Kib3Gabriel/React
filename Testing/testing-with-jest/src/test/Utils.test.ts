@@ -1,74 +1,108 @@
-import { getStringInfo, toUpper } from "../app/Utils"
+import { funcUpper, getStringInfo, StringUtils, toUpper } from "../app/Utils"
 
-// describe('Utils tests suite', () => {
-//     //put your tests here
-    
-//     test('uppercase', () =>{
-//         const result = toUpper('kibe')
-//         expect(result).toBe('KIBE')
-//     })
-//     test('should return uppercase', () => {
-//         const result = toUpper('abc')
-//         //now go ahead an do assertions 
-//         expect(result).toBe('ABC')
-//     })
-// })
-
-
-
+// AAA
 describe('Utils tests suite', () => {
-    it('should return uppercase', () => {
-        //Arrange: set up any required variables or methods being tested
-        const input = 'gabriEL'
-        const expected = 'GABRIELz'
-        const sut = toUpper
+    // it('should return uppercase', () => {
+    //     // Arrange: set up any required variables or methods being tested
+    //     const input = 'gabriEL'
+    //     const expected = 'GABRIEL'
+    //     const sut = toUpper
 
-        //Act: execute the method or function being tested
-        const result = toUpper(input)
+    //     //Act: execute the method or function being tested
+    //     const result = sut(input)
 
-        // assert
+    //     // assert
+    //     expect(result).toBe(expected)
+    // })
+
+    // //toBe is used for primitive values 
+    // // it.only = only this suit will be executed
+    // it.only('should return info for valid strings', () => {
+    //     const actual = getStringInfo('My-String')
+
+    //     expect(actual.lowerCase).toBe('my-string')
+
+    //     //toEqual 
+    //     //an object is not a primitive, so toBe will fail
+    //     expect(actual.extraInfo).toEqual({})
+
+    //     //check if an item is the string (value) provided
+    //     expect("Hello, Jest!").toMatch("Hello");
+
+    //     const fruits = ["apple", "banana", "orange"];
+    //     expect(fruits).toContain("banana");
+    //     // expect(fruits).toContain("mango");
+    //     expect(fruits).toHaveLength(3);
+
+    //     // Asserts that an object contains a specific property
+    //     const user = { name: "Alamin", age: 25 };
+    //     expect(user).toHaveProperty("name");
+    //     expect(user).toHaveProperty("age", 25);
+    // })
+
+
+    // test suite with multiple structure
+    describe('getStringInfo from args MY-String should', () => {
+        it('return right length', () => {
+            const actual = getStringInfo('My-String')
+            expect(actual).toHaveLength(9);   //passes if the length is of provided string is 9
+        })
+
+        it('return lower  case', () => {
+            const actual = getStringInfo('My-String')
+            expect(actual.lowerCase).toBe('my-string')
+        })
+        it('return upper case', () => {
+            const actual = getStringInfo('MY-String')
+            expect(actual.UpperCase).toBe('MY-STRING')
+        })
+    })
+
+})
+
+
+
+//Parameterized tests
+//Apply AAA
+describe('UpperCase', () => {
+    it.each([
+        ['abc', 'ABC'],
+        ['hello', 'HELLO'],
+        ['deLuffy', 'DELUFFY']
+    ])('Should return uppercase of the input string "%s"', (input: string, expected: string) => {
+        // Arrange
+        const sut = funcUpper
+        // Action
+        const result = sut(input)
+        // Assert
         expect(result).toBe(expected)
     })
 
+})
 
-    //more tests suits 
-    //toBe is used for primitive values 
-    it.only('should return info for valid strings', () => {
-        const actual = getStringInfo('My-String')
 
-        expect(actual.lowerCase).toBe('my-string')
 
-        //toEqual 
-        //an object is not a primitive, so toBe will fail
-        //we need to use toEqual for objects
-        // expect(actual.extraInfo).toBe({})
-        expect(actual.extraInfo).toEqual({})
 
-        expect("Hello, Jest!").toMatch("Jest");
+describe('thowing error', () => {
+    let sut: StringUtils
 
-        const fruits = ["apple", "banana", "orange"];
-        expect(fruits).toContain("banana");
-        // expect(fruits).toContain("mango");
-        expect(fruits).toHaveLength(3);
-
-        // Asserts that an object contains a specific property
-        const user = { name: "Alamin", age: 25 };
-        expect(user).toHaveProperty("name");
-        expect(user).toHaveProperty("age", 25);
-
-        // //test arrays
-        // //we passed the exact sequence
-        // expect(actual.characters).toEqual(["M", "y", "-", "S", "t", "r", "i", "n", "g"])
-        // expect(actual.characters).toContain("M");
-
-        // //what if the string chars are passed in different sequences
-        // //Matches any array made up entirely of elements in the provided array. You can use it inside toEqual or toBeCalledWith instead of a literal value.
-        // expect(actual.characters).toEqual(
-        //     expect.arrayContaining(["S", "t", "r", "i", "n", "g", "M", "y", "-" ])
-        // )
-
-        // expect(actual.extraInfo).toBeTruthy()
+    beforeEach(() => {
+        sut = new StringUtils
     })
 
+    //should throw an error for numeric input
+    it('throws an error when input contains numbers', () => {
+        expect(() => sut.toUpperCase('123')).toThrowError('Invalid argument: input must be a non-empty alphabetic string');
+    });
 
+    //throw an error for alphanumeric input
+    it('throws an error when input contains alphanumeric characters', () => {
+        expect(() => sut.toUpperCase('abc123')).toThrowError('Invalid argument: input must be a non-empty alphabetic string');
+    });
+
+    // Test case: should pass and return uppercase for valid alphabetic input
+    it('returns uppercase for valid alphabetic input', () => {
+        const result = sut.toUpperCase('hello');
+        expect(result).toBe('HELLO');
+    });
 })
