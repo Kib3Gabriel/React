@@ -1,15 +1,24 @@
-import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
+import {
+  Outlet,
+  Link,
+  useLoaderData,
+  Form,
+} from "react-router-dom";
 import { getContacts, createContact } from "../contacts";
-
 
 export async function action() {
   const contact = await createContact();
   return { contact };
 }
+export async function loader() {
+  const contacts = await getContacts();
+  return { contacts };
+}
 
 export default function Root() {
-  const contacts = useLoaderData(); // Using useLoaderData to access contacts
+  const {contacts} = useLoaderData(); // Using useLoaderData to access contacts
 
+  const hasNoNameContact = contacts.some(contact => !contact.first && !contact.last);
   return (
     <>
       <div id="sidebar">
@@ -33,7 +42,7 @@ export default function Root() {
         </div>
 
         <nav>
-        {contacts.length ? (
+          {contacts.length ? (
             <ul>
               {contacts.map((contact) => (
                 <li key={contact.id}>
@@ -63,9 +72,4 @@ export default function Root() {
       </div>
     </>
   );
-}
-
-export async function loader() {
-  const contacts = await getContacts();
-  return { contacts };
 }

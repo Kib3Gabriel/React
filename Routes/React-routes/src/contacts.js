@@ -4,6 +4,7 @@ import sortBy from "sort-by";
 
 export async function getContacts(query) {
   await fakeNetwork(`getContacts:${query}`);
+
   let contacts = await localforage.getItem("contacts");
   if (!contacts) contacts = [];
   if (query) {

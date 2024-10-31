@@ -1,14 +1,21 @@
-import { Form } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
+import { getContact } from "../contacts";
+
+export async function loader({ params }) {
+  const contact = await getContact(params.contactId);
+  return { contact };
+}
 
 export default function Contact() {
-  const contact = {
-    first: "Your",
-    last: "Name",
-    avatar: "https://robohash.org/you.png?size=200x200",
-    twitter: "your_handle",
-    notes: "Some notes",
-    favorite: true,
-  };
+  const { contact } = useLoaderData();
+  // const contact = {
+  //   first: "Your",
+  //   last: "Name",
+  //   avatar: "https://robohash.org/you.png?size=200x200",
+  //   twitter: "@kibe_G24",
+  //   notes: "whats on your mind🙄",
+  //   favorite: true,
+  // };
 
   return (
     <div id="contact">
@@ -28,8 +35,10 @@ export default function Contact() {
             <>
               {contact.first} {contact.last}
             </>
+            // if first & last name are empy then no names
           ) : (
-            <i>No Name</i>
+            // <i>No Name</i>
+            <i></i>
           )}{" "}
           <Favorite contact={contact} />
         </h1>
